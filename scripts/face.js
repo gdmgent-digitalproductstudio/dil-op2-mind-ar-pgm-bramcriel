@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const METER_MAX = 100;
   const EYE_GLOW_START_PERCENT = 10;
   const LASER_START_PERCENT = 99;
-  const CORRUPTION_PER_SECOND = 10;
+  const CORRUPTION_PER_SECOND = 5;
   const RESIST_REDUCTION_PER_CLICK = 4;
   const movementMeterFill = document.getElementById("movement-meter-fill");
   const movementMeterText = document.getElementById("movement-meter-text");
@@ -127,7 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const pulseHigh = Math.max(targetOpacity, 0.02);
-      const pulseLow = Math.max(Number((targetOpacity * 0.65).toFixed(3)), 0.01);
+      const pulseLow = Math.max(
+        Number((targetOpacity * 0.65).toFixed(3)),
+        0.01,
+      );
       element.setAttribute(
         "animation__pulse",
         `property: material.opacity; from: ${pulseHigh}; to: ${pulseLow}; dir: alternate; dur: 500; loop: true`,
@@ -137,7 +140,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateEyeLasersForMeter = () => {
     const showLasers = movementMeter >= LASER_START_PERCENT;
-    eyeLaserBeams.forEach((laserBeam) => laserBeam.setAttribute("visible", showLasers));
+    eyeLaserBeams.forEach((laserBeam) =>
+      laserBeam.setAttribute("visible", showLasers),
+    );
   };
 
   const updateMeterUI = () => {
