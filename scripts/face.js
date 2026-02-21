@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const METER_MAX = 100;
+  const EYE_GLOW_START_PERCENT = 10;
   const CORRUPTION_PER_SECOND = 10;
   const RESIST_REDUCTION_PER_CLICK = 4;
   const movementMeterFill = document.getElementById("movement-meter-fill");
@@ -8,6 +9,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const ringEmpty = document.getElementById("ring-empty");
   const ringBase = document.getElementById("ring-base");
   const ringRed = document.getElementById("ring-red");
+  const eyeAuraEntities = [
+    document.getElementById("eye-aura-left"),
+    document.getElementById("eye-aura-right"),
+  ].filter(Boolean);
+  const eyeGlowLayers = eyeAuraEntities.flatMap((eyeAura) =>
+    Array.from(eyeAura.querySelectorAll(".eye-glow-layer")).map((layer) => ({
+      element: layer,
+      maxOpacity: Number(layer.dataset.maxOpacity) || 0.5,
+      isCore: layer.classList.contains("eye-glow-core"),
+    })),
+  );
 
   let movementMeter = 0;
   let shakingRing = null;
@@ -87,6 +99,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const updateEyeGlowForMeter = () => {
+    const rawProgress =
+      (movementMeter - EYE_GLOW_START_PERCENT) /
+      (METER_MAX - EYE_GLOW_START_PERCENT);
+    const clampedProgress = Math.max(0, Math.min(1, rawProgress));
+    // Ease-in makes early glow subtle and ramps up near higher corruption.
+    const glowIntensity = Math.pow(clampedProgress, 1.35);
+    const shouldShowGlow = glowIntensity > 0;
+
+    eyeAuraEntities.forEach((eyeAura) =>
+      eyeAura.setAttribute("visible", shouldShowGlow),
+    );
+
+    eyeGlowLayers.forEach(({ element, maxOpacity, isCore }) => {
+      const targetOpacity = Number((maxOpacity * glowIntensity).toFixed(3));
+      element.setAttribute("material", "opacity", targetOpacity);
+
+      if (!isCore) return;
+      if (!shouldShowGlow) {
+        element.removeAttribute("animation__pulse");
+        return;
+      }
+
+      const pulseHigh = Math.max(targetOpacity, 0.02);
+      const pulseLow = Math.max(Number((targetOpacity * 0.65).toFixed(3)), 0.01);
+      element.setAttribute(
+        "animation__pulse",
+        `property: material.opacity; from: ${pulseHigh}; to: ${pulseLow}; dir: alternate; dur: 500; loop: true`,
+      );
+    });
+  };
+
   const updateMeterUI = () => {
     const roundedValue = Math.round(movementMeter);
     if (movementMeterFill) {
@@ -101,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
     movementMeter = Math.max(0, movementMeter - RESIST_REDUCTION_PER_CLICK);
     updateRingModelForMeter();
     updateShakeForMeter();
+    updateEyeGlowForMeter();
     updateMeterUI();
   };
 
@@ -114,10 +159,12 @@ document.addEventListener("DOMContentLoaded", () => {
     movementMeter = Math.min(METER_MAX, movementMeter + CORRUPTION_PER_SECOND);
     updateRingModelForMeter();
     updateShakeForMeter();
+    updateEyeGlowForMeter();
     updateMeterUI();
   }, 1000);
 
   updateMeterUI();
   updateRingModelForMeter();
   updateShakeForMeter();
+  updateEyeGlowForMeter();
 });

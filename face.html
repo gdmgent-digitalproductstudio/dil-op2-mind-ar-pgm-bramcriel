@@ -98,6 +98,70 @@
             animation="property: rotation; to: 0 360 0; loop: true; dur: 12000; easing: linear"
           ></a-entity>
         </a-entity>
+
+        <a-entity mindar-face-target="anchorIndex: 159" id="eye-aura-left">
+          <a-sphere
+            class="eye-glow-layer"
+            data-max-opacity="0.18"
+            radius="0.052"
+            position="0 0 -0.006"
+            material="shader: flat; color: #ff1a1a; transparent: true; opacity: 0.18; blending: additive; depthWrite: false"
+          ></a-sphere>
+          <a-sphere
+            class="eye-glow-layer"
+            data-max-opacity="0.38"
+            radius="0.036"
+            position="0 0 -0.004"
+            material="shader: flat; color: #ff0000; transparent: true; opacity: 0.38; blending: additive; depthWrite: false"
+            animation="property: scale; dir: alternate; dur: 900; loop: true; to: 1.12 1.12 1.12"
+          ></a-sphere>
+          <a-sphere
+            class="eye-glow-layer"
+            data-max-opacity="0.72"
+            radius="0.022"
+            position="0 0 -0.003"
+            material="shader: flat; color: #ff2f2f; transparent: true; opacity: 0.72; blending: additive; depthWrite: false"
+          ></a-sphere>
+          <a-sphere
+            class="eye-glow-layer eye-glow-core"
+            data-max-opacity="1"
+            radius="0.011"
+            position="0 0 -0.0015"
+            material="shader: flat; color: #ff8080; transparent: true; opacity: 1; blending: additive; depthWrite: false"
+          ></a-sphere>
+        </a-entity>
+
+        <a-entity mindar-face-target="anchorIndex: 386" id="eye-aura-right">
+          <a-sphere
+            class="eye-glow-layer"
+            data-max-opacity="0.18"
+            radius="0.052"
+            position="0 0 -0.006"
+            material="shader: flat; color: #ff1a1a; transparent: true; opacity: 0.18; blending: additive; depthWrite: false"
+          ></a-sphere>
+          <a-sphere
+            class="eye-glow-layer"
+            data-max-opacity="0.38"
+            radius="0.036"
+            position="0 0 -0.004"
+            material="shader: flat; color: #ff0000; transparent: true; opacity: 0.38; blending: additive; depthWrite: false"
+            animation="property: scale; dir: alternate; dur: 900; loop: true; to: 1.12 1.12 1.12"
+          ></a-sphere>
+          <a-sphere
+            class="eye-glow-layer"
+            data-max-opacity="0.72"
+            radius="0.022"
+            position="0 0 -0.003"
+            material="shader: flat; color: #ff2f2f; transparent: true; opacity: 0.72; blending: additive; depthWrite: false"
+          ></a-sphere>
+          <a-sphere
+            class="eye-glow-layer eye-glow-core"
+            data-max-opacity="1"
+            radius="0.011"
+            position="0 0 -0.0015"
+            material="shader: flat; color: #ff8080; transparent: true; opacity: 1; blending: additive; depthWrite: false"
+          ></a-sphere>
+        </a-entity>
       </a-scene>
     </div>
 
