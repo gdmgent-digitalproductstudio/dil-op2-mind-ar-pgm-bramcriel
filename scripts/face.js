@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const ringRed = document.getElementById("ring-red");
 
   let movementMeter = 0;
+  let shakingRing = null;
+  let shakeDurationMs = null;
 
   const updateRingModelForMeter = () => {
     const showRed = movementMeter >= METER_MAX;
@@ -19,6 +21,70 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ringEmpty) ringEmpty.setAttribute("visible", showEmpty);
     if (ringBase) ringBase.setAttribute("visible", showBase);
     if (ringRed) ringRed.setAttribute("visible", showRed);
+  };
+
+  const toPositionObject = (positionAttribute) => {
+    if (typeof positionAttribute === "object" && positionAttribute !== null) {
+      return positionAttribute;
+    }
+
+    if (typeof positionAttribute === "string") {
+      const [x, y, z] = positionAttribute.split(" ").map(Number);
+      return { x: x || 0, y: y || 0, z: z || 0 };
+    }
+
+    return { x: 0, y: 0, z: 0 };
+  };
+
+  const startShakeAnimation = (ringEntity, durationMs) => {
+    if (!ringEntity) return;
+    const position = toPositionObject(ringEntity.getAttribute("position"));
+    const shakeTo = `${position.x + 0.045} ${position.y} ${position.z}`;
+    ringEntity.setAttribute(
+      "animation__forgeShake",
+      `property: position; from: ${position.x} ${position.y} ${position.z}; to: ${shakeTo}; dir: alternate; loop: true; dur: ${durationMs}; easing: easeInOutSine`,
+    );
+  };
+
+  const stopShakeAnimation = (ringEntity) => {
+    if (!ringEntity) return;
+    ringEntity.removeAttribute("animation__forgeShake");
+  };
+
+  const getVisibleRing = () => {
+    if (ringRed?.getAttribute("visible")) return ringRed;
+    if (ringBase?.getAttribute("visible")) return ringBase;
+    if (ringEmpty?.getAttribute("visible")) return ringEmpty;
+    return null;
+  };
+
+  const updateShakeForMeter = () => {
+    const isFullyCorrupted = movementMeter >= METER_MAX;
+    const shouldShake = movementMeter >= 65 && !isFullyCorrupted;
+    const targetShakeDuration = movementMeter >= 80 ? 40 : 70;
+    const visibleRing = getVisibleRing();
+
+    if (!shouldShake) {
+      if (shakingRing) {
+        stopShakeAnimation(shakingRing);
+        shakingRing = null;
+        shakeDurationMs = null;
+      }
+      return;
+    }
+
+    if (!visibleRing) return;
+    if (shakingRing && shakingRing !== visibleRing) {
+      stopShakeAnimation(shakingRing);
+      shakingRing = null;
+      shakeDurationMs = null;
+    }
+    if (!shakingRing || shakeDurationMs !== targetShakeDuration) {
+      if (shakingRing) stopShakeAnimation(shakingRing);
+      startShakeAnimation(visibleRing, targetShakeDuration);
+      shakingRing = visibleRing;
+      shakeDurationMs = targetShakeDuration;
+    }
   };
 
   const updateMeterUI = () => {
@@ -34,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const resistRing = () => {
     movementMeter = Math.max(0, movementMeter - RESIST_REDUCTION_PER_CLICK);
     updateRingModelForMeter();
+    updateShakeForMeter();
     updateMeterUI();
   };
 
@@ -46,9 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     movementMeter = Math.min(METER_MAX, movementMeter + CORRUPTION_PER_SECOND);
     updateRingModelForMeter();
+    updateShakeForMeter();
     updateMeterUI();
   }, 1000);
 
   updateMeterUI();
   updateRingModelForMeter();
+  updateShakeForMeter();
 });
