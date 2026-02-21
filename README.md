@@ -95,14 +95,14 @@ De andere models werden zelf gemaakt, met het bovenstaande model als basis.
 - De modellen en code in dit project zijn enkel voor educatief gebruik binnen deze opdracht.
 - Er worden geen assets commercieel verspreid.
 
-## Evaluatie-instructies
+## Instructies
 
 Voor image tracking moeten volgende kaarten getoond/geprint worden:
 
 - The One Ring;
 - The Eye of Sauron;
 - Frodo;
-- Mount Doom.
+- Mount Doom;
 
 Zonder deze kaarten kan de AR image tracking niet correct gedemonstreerd worden.
 
