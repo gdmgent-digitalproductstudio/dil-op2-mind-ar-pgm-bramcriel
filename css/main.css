@@ -232,6 +232,11 @@ a-scene {
   height: 100%;
 }
 
+.ar-wrapper .a-canvas,
+.ar-wrapper canvas {
+  cursor: default !important;
+}
+
 @media (max-width: 600px) {
   .logo-text {
     font-size: 1.6rem;
