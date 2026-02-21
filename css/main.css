@@ -61,6 +61,7 @@ a-scene {
   flex: 1;
   padding: 1rem;
   border: 1px solid #d4af37;
+  background: transparent;
   color: #d4af37;
   text-decoration: none;
   font-size: 0.9rem;
@@ -68,9 +69,11 @@ a-scene {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  font-family: "Ringbearer", serif;
+  cursor: pointer;
 }
 
-.nav-button span {
+.nav-button .nav-button-subtitle {
   font-size: 0.7rem;
   opacity: 0.7;
   font-family: sans-serif;
@@ -79,6 +82,35 @@ a-scene {
 .nav-button:hover {
   background-color: #d4af37;
   color: #000;
+}
+
+.forge-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.forge-status {
+  padding: 0.5rem 1rem 0;
+}
+
+#forge-status-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+.forge-progress {
+  width: min(92vw, 28rem);
+  margin: 0 auto;
+  height: 0.45rem;
+  border: 1px solid #d4af37;
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.forge-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #a07f2e 0%, #d4af37 100%);
+  transition: width 0.08s linear;
 }
 
 .ar-page {

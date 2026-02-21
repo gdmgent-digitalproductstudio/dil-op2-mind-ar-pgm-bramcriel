@@ -25,6 +25,11 @@
       >
         <a-assets>
           <a-asset-item
+            id="ringEmpty"
+            src="assets/models/ring_empty.glb"
+          ></a-asset-item>
+
+          <a-asset-item
             id="ringModel"
             src="assets/models/ring_base.glb"
           ></a-asset-item>
@@ -51,9 +56,19 @@
         <a-light type="directional" position="-4 -2 1" intensity="50"></a-light>
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        <a-entity mindar-image-target="targetIndex: 0">
+        <a-entity mindar-image-target="targetIndex: 0" data-target-index="0">
           <a-entity
+            class="ring-base"
+            gltf-model="#ringEmpty"
+            position="0 -0.5 -3"
+            rotation="0 0 0"
+            scale="0.25 0.25 0.25"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+          ></a-entity>
+          <a-entity
+            class="ring-forged"
             gltf-model="#ringModel"
+            visible="false"
             position="0 -0.5 -3"
             rotation="0 0 0"
             scale="0.25 0.25 0.25"
@@ -61,9 +76,19 @@
           ></a-entity>
         </a-entity>
 
-        <a-entity mindar-image-target="targetIndex: 1">
+        <a-entity mindar-image-target="targetIndex: 1" data-target-index="1">
           <a-entity
+            class="ring-base"
+            gltf-model="#ringEmpty"
+            position="0 -0.5 -3"
+            rotation="0 0 0"
+            scale="0.25 0.25 0.25"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+          ></a-entity>
+          <a-entity
+            class="ring-forged"
             gltf-model="#ringGreenModel"
+            visible="false"
             position="0 0 -3"
             rotation="0 0 0"
             scale="0.25 0.25 0.25"
@@ -71,19 +96,39 @@
           ></a-entity>
         </a-entity>
 
-        <a-entity mindar-image-target="targetIndex: 2">
+        <a-entity mindar-image-target="targetIndex: 2" data-target-index="2">
           <a-entity
-            gltf-model="#ringRedModel"
-            position="0 0 -3"
+            class="ring-base"
+            gltf-model="#ringEmpty"
+            position="0 -0.5 -3"
             rotation="0 0 0"
             scale="0.25 0.25 0.25"
             animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
           ></a-entity>
-        </a-entity>
-
-        <a-entity mindar-image-target="targetIndex: 3">
           <a-entity
+            class="ring-forged"
             gltf-model="#ringBlueModel"
+            visible="false"
+            position="0 0 -3"
+            rotation="0 0 0"
+            scale="0.25 0.25 0.25"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+          ></a-entity>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 3" data-target-index="3">
+          <a-entity
+            class="ring-base"
+            gltf-model="#ringEmpty"
+            position="0 -0.5 -3"
+            rotation="0 0 0"
+            scale="0.25 0.25 0.25"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+          ></a-entity>
+          <a-entity
+            class="ring-forged"
+            gltf-model="#ringRedModel"
+            visible="false"
             position="0 0 -3"
             rotation="0 0 0"
             scale="0.25 0.25 0.25"
@@ -93,10 +138,23 @@
       </a-scene>
     </div>
 
+    <section id="forge-status" class="forge-status" hidden>
+      <p id="forge-status-text">Forging...</p>
+      <div class="forge-progress">
+        <div id="forge-progress-fill" class="forge-progress-fill"></div>
+      </div>
+    </section>
+
     <nav class="nav-container">
+      <button id="forge-button" class="nav-button forge-button" type="button">
+        <span id="forge-button-title">Forge</span>
+        <span id="forge-button-subtitle" class="nav-button-subtitle"
+          >Corrupt ring</span
+        >
+      </button>
       <a href="index.html" class="nav-button">
         ← Back
-        <span>Return to The Shire</span>
+        <span class="nav-button-subtitle">Return to The Shire</span>
       </a>
     </nav>
 
