@@ -7,12 +7,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const targetsByIndex = new Map();
   const forgedStateByTargetIndex = {};
   const forgeButton = document.getElementById("forge-button");
+  const downloadMarkersButton = document.getElementById(
+    "download-markers-button",
+  );
   const forgeButtonTitle = document.getElementById("forge-button-title");
   const forgeButtonSubtitle = document.getElementById("forge-button-subtitle");
   const forgeStatus = document.getElementById("forge-status");
   const forgeStatusText = document.getElementById("forge-status-text");
   const forgeProgressFill = document.getElementById("forge-progress-fill");
   let messageTimeoutId = null;
+  const markerFiles = [
+    "markers/target-0.jpg",
+    "markers/target-1.jpg",
+    "markers/target-2.jpg",
+    "markers/target-3.jpg",
+  ];
+
+  const triggerFileDownload = (filePath, downloadName) => {
+    const link = document.createElement("a");
+    link.href = filePath;
+    link.download = downloadName || filePath.split("/").pop() || "marker.jpg";
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
 
   const showForgeStatus = (text, progressPercent) => {
     if (!forgeStatus || !forgeStatusText || !forgeProgressFill || !forgeButton)
@@ -187,6 +206,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
       isForging = false;
       forgeButton.disabled = false;
+    });
+  }
+
+  if (downloadMarkersButton) {
+    downloadMarkersButton.addEventListener("click", async () => {
+      if (!window.JSZip) return;
+
+      const originalText = downloadMarkersButton.textContent;
+      downloadMarkersButton.disabled = true;
+      downloadMarkersButton.textContent = "Preparing zip...";
+
+      try {
+        const zip = new window.JSZip();
+        const folder = zip.folder("markers");
+        if (!folder) throw new Error("Could not create zip folder.");
+
+        const fileBlobs = await Promise.all(
+          markerFiles.map(async (filePath) => {
+            const response = await fetch(filePath);
+            if (!response.ok) {
+              throw new Error(`Failed to fetch ${filePath}`);
+            }
+            return {
+              fileName: filePath.split("/").pop() || "marker.jpg",
+              blob: await response.blob(),
+            };
+          }),
+        );
+
+        fileBlobs.forEach(({ fileName, blob }) => {
+          folder.file(fileName, blob);
+        });
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        const zipUrl = URL.createObjectURL(zipBlob);
+        triggerFileDownload(zipUrl, "markers.zip");
+        URL.revokeObjectURL(zipUrl);
+      } catch (error) {
+        console.error("Failed to prepare markers zip:", error);
+      } finally {
+        downloadMarkersButton.disabled = false;
+        downloadMarkersButton.textContent = originalText || "Download markers";
+      }
     });
   }
 

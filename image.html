@@ -7,15 +7,13 @@
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body class="ar-page">
     <header class="logo-container">
       <div class="logo-stack">
         <div class="logo-title-row">
-          <a href="index.html" class="nav-breadcrumb nav-breadcrumb-top"
-            >← Back</a
-          >
           <h1 class="logo-text">
             <a href="index.html" class="logo-link">The One Ring</a>
           </h1>
@@ -25,6 +23,16 @@
     </header>
 
     <div class="ar-wrapper">
+      <header class="ar-floating-header">
+        <a href="index.html" class="nav-button ar-floating-button">← Back</a>
+        <button
+          id="download-markers-button"
+          class="nav-button ar-floating-button"
+          type="button"
+        >
+          Download markers
+        </button>
+      </header>
       <a-scene
         mindar-image="imageTargetSrc: assets/targets.mind; maxTrack: 1;"
         color-space="sRGB"
