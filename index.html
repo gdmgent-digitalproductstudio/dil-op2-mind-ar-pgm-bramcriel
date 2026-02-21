@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The One Ring – Corruption System</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <header class="logo-container">
+      <h1 class="logo-text">The One Ring</h1>
+      <p class="subtitle">AR Experience</p>
+    </header>
+
+    <section class="ring-preview">
+      <a-scene
+        embedded
+        renderer="alpha: true"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+      >
+        <a-assets>
+          <a-asset-item
+            id="ringModel"
+            src="assets/models/ring_base.glb"
+          ></a-asset-item>
+        </a-assets>
+
+        <a-entity
+          gltf-model="#ringModel"
+          position="0 -1 -3"
+          rotation="0 0 0"
+          scale="0.5 0.5 0.5"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+        ></a-entity>
+
+        <a-light type="ambient" intensity="200"></a-light>
+        <a-light type="directional" position="1 2 1" intensity="50"></a-light>
+        <a-light type="directional" position="-1 1 1" intensity="50"></a-light>
+
+        <a-camera
+          position="0 0 0"
+          look-controls="enabled: false"
+          wasd-controls="enabled: false"
+        ></a-camera>
+      </a-scene>
+    </section>
+
+    <nav class="nav-container">
+      <a href="image.html" class="nav-button left">
+        ← Enter Middle-earth
+        <span>Image Tracking Experience</span>
+      </a>
+
+      <a href="face.html" class="nav-button right">
+        Face the Ring →
+        <span>Face Tracking Experience</span>
+      </a>
+    </nav>
+  </body>
+</html>
