@@ -1,1 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The One Ring – Image Tracking</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body class="ar-page">
+    <header class="logo-container">
+      <h1 class="logo-text">The One Ring</h1>
+      <p class="subtitle">Corrupt The Ring</p>
+    </header>
 
+    <div class="ar-wrapper">
+      <a-scene
+        mindar-image="imageTargetSrc: assets/targets.mind; maxTrack: 1;"
+        color-space="sRGB"
+        renderer="colorManagement: true; physicallyCorrectLights: true"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+        loading-screen="enabled: false"
+      >
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+        <!-- TARGET 0 – The One Ring -->
+        <a-entity mindar-image-target="targetIndex: 0">
+          <a-entity
+            id="ring-neutral"
+            geometry="primitive: torus; radius: 0.32; radiusTubular: 0.07"
+            material="color: #d4af37; metalness: 0.9; roughness: 0.2"
+            position="0 0 0"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+          ></a-entity>
+        </a-entity>
+
+        <!-- TARGET 1 – Eye of Sauron -->
+        <a-entity mindar-image-target="targetIndex: 1">
+          <a-entity
+            id="ring-corrupt"
+            geometry="primitive: torus; radius: 0.34; radiusTubular: 0.09"
+            position="0 0 0"
+            material="color: #4a1a1a; emissive: #990000; emissiveIntensity: 1.3"
+            animation="property: scale; to: 0.7 0.7 0.7; dir: alternate; dur: 1000; loop: true"
+          ></a-entity>
+        </a-entity>
+
+        <!-- TARGET 2 – Fellowship -->
+        <a-entity mindar-image-target="targetIndex: 2">
+          <a-entity
+            id="ring-resist"
+            geometry="primitive: torus; radius: 0.30; radiusTubular: 0.06"
+            position="0 0 0"
+            material="color: #8ca8ff; emissive: #0044ff; emissiveIntensity: 1.2"
+          ></a-entity>
+        </a-entity>
+
+        <!-- TARGET 3 – Mount Doom -->
+        <a-entity mindar-image-target="targetIndex: 3">
+          <a-entity
+            id="ring-destroy"
+            geometry="primitive: torus; radius: 0.34; radiusTubular: 0.08"
+            position="0 0 0"
+            scale="1 0.45 1"
+            material="color: #111111; metalness: 0.8; roughness: 0.5"
+            animation="property: position; to: 0 -0.5 0; dur: 3000"
+          ></a-entity>
+        </a-entity>
+      </a-scene>
+    </div>
+
+    <nav class="nav-container">
+      <a href="index.html" class="nav-button">
+        ← Back
+        <span>Return to Menu</span>
+      </a>
+    </nav>
+
+    <script src="scripts/image.js"></script>
+  </body>
+</html>
