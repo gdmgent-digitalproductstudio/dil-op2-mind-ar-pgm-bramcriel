@@ -10,8 +10,15 @@
   </head>
   <body class="ar-page">
     <header class="logo-container">
-      <h1 class="logo-text">The One Ring</h1>
-      <p class="subtitle">Corrupt The Ring</p>
+      <div class="logo-stack">
+        <div class="logo-title-row">
+          <a href="index.html" class="nav-breadcrumb nav-breadcrumb-top">← Back</a>
+          <h1 class="logo-text">
+            <a href="index.html" class="logo-link">The One Ring</a>
+          </h1>
+        </div>
+        <p class="subtitle">Corrupt The Ring</p>
+      </div>
     </header>
 
     <div class="ar-wrapper">
@@ -138,24 +145,19 @@
       </a-scene>
     </div>
 
-    <section id="forge-status" class="forge-status" hidden>
-      <p id="forge-status-text">Forging...</p>
-      <div class="forge-progress">
-        <div id="forge-progress-fill" class="forge-progress-fill"></div>
-      </div>
-    </section>
-
-    <nav class="nav-container">
+    <nav class="nav-container nav-container-single">
       <button id="forge-button" class="nav-button forge-button" type="button">
         <span id="forge-button-title">Forge</span>
         <span id="forge-button-subtitle" class="nav-button-subtitle"
           >Corrupt ring</span
         >
       </button>
-      <a href="index.html" class="nav-button">
-        ← Back
-        <span class="nav-button-subtitle">Return to The Shire</span>
-      </a>
+      <section id="forge-status" class="nav-button forge-status-button" hidden>
+        <p id="forge-status-text">Forging...</p>
+        <div class="forge-progress">
+          <div id="forge-progress-fill" class="forge-progress-fill"></div>
+        </div>
+      </section>
     </nav>
 
     <script src="scripts/image.js"></script>

@@ -12,18 +12,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const forgeStatus = document.getElementById("forge-status");
   const forgeStatusText = document.getElementById("forge-status-text");
   const forgeProgressFill = document.getElementById("forge-progress-fill");
+  let messageTimeoutId = null;
 
   const showForgeStatus = (text, progressPercent) => {
-    if (!forgeStatus || !forgeStatusText || !forgeProgressFill) return;
+    if (!forgeStatus || !forgeStatusText || !forgeProgressFill || !forgeButton)
+      return;
+    forgeButton.style.display = "none";
+    forgeButton.hidden = true;
+    forgeStatus.style.display = "flex";
     forgeStatus.hidden = false;
+    forgeStatus.setAttribute("aria-hidden", "false");
     forgeStatusText.textContent = text;
     forgeProgressFill.style.width = `${progressPercent}%`;
   };
 
   const hideForgeStatus = () => {
-    if (!forgeStatus || !forgeProgressFill) return;
+    if (!forgeStatus || !forgeProgressFill || !forgeButton) return;
+    forgeStatus.style.display = "none";
     forgeStatus.hidden = true;
+    forgeStatus.setAttribute("aria-hidden", "true");
     forgeProgressFill.style.width = "0%";
+    forgeButton.style.display = "flex";
+    forgeButton.hidden = false;
+  };
+
+  const flashForgeMessage = (message, durationMs = 1200) => {
+    if (!forgeButtonSubtitle) return;
+    if (messageTimeoutId) clearTimeout(messageTimeoutId);
+    forgeButtonSubtitle.textContent = message;
+    messageTimeoutId = setTimeout(() => {
+      messageTimeoutId = null;
+      updateForgeButtonText();
+    }, durationMs);
   };
 
   const toPositionObject = (positionAttribute) => {
@@ -117,8 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isForging) return;
 
       if (activeTargetIndex === null) {
-        showForgeStatus("Find a marker first", 0);
-        setTimeout(hideForgeStatus, 1200);
+        flashForgeMessage("Find a marker first");
         return;
       }
 
@@ -128,8 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const baseRing = activeTarget.querySelector(".ring-base");
       const forgedRing = activeTarget.querySelector(".ring-forged");
       if (!forgedRing) {
-        showForgeStatus("This marker cannot be forged", 0);
-        setTimeout(hideForgeStatus, 1200);
+        flashForgeMessage("Marker cannot be forged");
         return;
       }
 
@@ -174,4 +192,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   applyRingModels();
   updateForgeButtonText();
+  hideForgeStatus();
 });
