@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const METER_MAX = 100;
   const EYE_GLOW_START_PERCENT = 10;
+  const LASER_START_PERCENT = 99;
   const CORRUPTION_PER_SECOND = 10;
   const RESIST_REDUCTION_PER_CLICK = 4;
   const movementMeterFill = document.getElementById("movement-meter-fill");
@@ -19,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
       maxOpacity: Number(layer.dataset.maxOpacity) || 0.5,
       isCore: layer.classList.contains("eye-glow-core"),
     })),
+  );
+  const eyeLaserBeams = eyeAuraEntities.flatMap((eyeAura) =>
+    Array.from(eyeAura.querySelectorAll(".eye-laser")),
   );
 
   let movementMeter = 0;
@@ -131,6 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  const updateEyeLasersForMeter = () => {
+    const showLasers = movementMeter >= LASER_START_PERCENT;
+    eyeLaserBeams.forEach((laserBeam) => laserBeam.setAttribute("visible", showLasers));
+  };
+
   const updateMeterUI = () => {
     const roundedValue = Math.round(movementMeter);
     if (movementMeterFill) {
@@ -146,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateRingModelForMeter();
     updateShakeForMeter();
     updateEyeGlowForMeter();
+    updateEyeLasersForMeter();
     updateMeterUI();
   };
 
@@ -160,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateRingModelForMeter();
     updateShakeForMeter();
     updateEyeGlowForMeter();
+    updateEyeLasersForMeter();
     updateMeterUI();
   }, 1000);
 
@@ -167,4 +178,5 @@ document.addEventListener("DOMContentLoaded", () => {
   updateRingModelForMeter();
   updateShakeForMeter();
   updateEyeGlowForMeter();
+  updateEyeLasersForMeter();
 });

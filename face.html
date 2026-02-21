@@ -99,7 +99,7 @@
           ></a-entity>
         </a-entity>
 
-        <a-entity mindar-face-target="anchorIndex: 159" id="eye-aura-left">
+        <a-entity mindar-face-target="anchorIndex: 160" id="eye-aura-left">
           <a-sphere
             class="eye-glow-layer"
             data-max-opacity="0.18"
@@ -129,9 +129,29 @@
             position="0 0 -0.0015"
             material="shader: flat; color: #ff8080; transparent: true; opacity: 1; blending: additive; depthWrite: false"
           ></a-sphere>
+          <a-box
+            class="eye-laser"
+            visible="false"
+            width="0.04"
+            height="0.04"
+            depth="1.6"
+            position="0 0 0.8"
+            material="shader: flat; color: #ff2a2a; transparent: true; opacity: 0.55; blending: additive; depthWrite: false"
+            animation__laserFlicker="property: material.opacity; dir: alternate; dur: 120; loop: true; to: 0.2"
+          ></a-box>
+          <a-box
+            class="eye-laser"
+            visible="false"
+            width="0.015"
+            height="0.015"
+            depth="1.6"
+            position="0 0 0.8"
+            material="shader: flat; color: #ffd1d1; transparent: true; opacity: 1; blending: additive; depthWrite: false"
+            animation__laserFlickerCore="property: material.opacity; dir: alternate; dur: 90; loop: true; to: 0.7"
+          ></a-box>
         </a-entity>
 
-        <a-entity mindar-face-target="anchorIndex: 386" id="eye-aura-right">
+        <a-entity mindar-face-target="anchorIndex: 387" id="eye-aura-right">
           <a-sphere
             class="eye-glow-layer"
             data-max-opacity="0.18"
@@ -161,6 +181,26 @@
             position="0 0 -0.0015"
             material="shader: flat; color: #ff8080; transparent: true; opacity: 1; blending: additive; depthWrite: false"
           ></a-sphere>
+          <a-box
+            class="eye-laser"
+            visible="false"
+            width="0.04"
+            height="0.04"
+            depth="1.6"
+            position="0 0 0.8"
+            material="shader: flat; color: #ff2a2a; transparent: true; opacity: 0.55; blending: additive; depthWrite: false"
+            animation__laserFlicker="property: material.opacity; dir: alternate; dur: 120; loop: true; to: 0.2"
+          ></a-box>
+          <a-box
+            class="eye-laser"
+            visible="false"
+            width="0.015"
+            height="0.015"
+            depth="1.6"
+            position="0 0 0.8"
+            material="shader: flat; color: #ffd1d1; transparent: true; opacity: 1; blending: additive; depthWrite: false"
+            animation__laserFlickerCore="property: material.opacity; dir: alternate; dur: 90; loop: true; to: 0.7"
+          ></a-box>
         </a-entity>
       </a-scene>
     </div>
